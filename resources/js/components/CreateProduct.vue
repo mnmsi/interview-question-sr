@@ -202,13 +202,13 @@ export default {
 
             if (!this.product) {
                 axios.post('/product', product).then(response => {
-                    window.location.href = '/product';
+                    // window.location.href = '/product';
                 }).catch(error => {
                     console.log(error);
                 })
             } else {
                 axios.put('/product/' + this.product.id, product).then(response => {
-                    window.location.href = '/product';
+                    // window.location.href = '/product';
                 }).catch(error => {
                     console.log(error);
                 })

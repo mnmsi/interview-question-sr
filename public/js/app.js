@@ -2120,14 +2120,12 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       if (!this.product) {
-        axios.post('/product', product).then(function (response) {
-          window.location.href = '/product';
+        axios.post('/product', product).then(function (response) {// window.location.href = '/product';
         })["catch"](function (error) {
           console.log(error);
         });
       } else {
-        axios.put('/product/' + this.product.id, product).then(function (response) {
-          window.location.href = '/product';
+        axios.put('/product/' + this.product.id, product).then(function (response) {// window.location.href = '/product';
         })["catch"](function (error) {
           console.log(error);
         });

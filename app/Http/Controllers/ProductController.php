@@ -94,29 +94,29 @@ class ProductController extends Controller
 
             if ($storeProd) {
                 if (isset($request->product_variant)) {
-                    foreach ($request->product_variant as $varient) {
-                        $varientData['variant'] = implode(' / ', $varient['tags']);
-                        $varientData['variant_id'] = $varient['option'];
-                        $varientData['product_id'] = $storeProd->id;
-                        $varient = ProductVariant::create($varientData);
+                    $varientData['variant_id'] = $request->product_variant[0]['option'];
+                    $varientData['product_id'] = $storeProd->id;
+                    foreach ($request->product_variant[0]['tags'] as $varient) {
+                        $varientData['variant'] = $varient;
+                        ProductVariant::create($varientData);
                     }
                 }
             }
 
             if (isset($request->product_variant_prices)) {
-                foreach ($request->product_variant_prices as $varientPrice) {
-                    $varientPrice['product_id'] = $storeProd->id;
+                $varientPrice['product_id'] = $storeProd->id;
+                foreach ($request->product_variant_prices as $vp) {
+                    $varientPrice['price'] = $vp['price'];
+                    $varientPrice['stock'] = $vp['stock'];
                     ProductVariantPrice::create($varientPrice);
                 }
             }
 
-
-            if ($request->has('product_image')) {
-                $prodImg['file_path'] = Storage::put('file', $request->product_image);
+            if ($request->hasFile('product_image')) {
+                $prodImg['file_path'] = Storage::putFile('prod_image', $request->file('product_image'));
                 $prodImg['product_id'] = $storeProd->id;
                 ProductImage::create($prodImg);
             }
-
 
             DB::commit();
             return response()->json([
